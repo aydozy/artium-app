@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artium — Turn Your Photos Into Art</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #F2622A;
+    --orange-light: #FF8C5A;
+    --orange-pale: #FFF0EB;
+    --orange-soft: #FFD5C2;
+    --cream: #FDFAF7;
+    --dark: #1C1208;
+    --text: #2D1F0E;
+    --muted: #9E8A78;
+    --border: #EDE5DC;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--cream); color: var(--text); font-family: 'Outfit', sans-serif; font-weight:300; overflow-x:hidden; }
+  body.menu-open { overflow: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 0 48px; height:68px;
+    background: rgba(253,250,247,0.95); backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo img { height:52px; display:block; }
+  .nav-links { display:flex; gap:28px; list-style:none; align-items:center; }
+  .nav-links a { text-decoration:none; color:var(--muted); font-size:0.88rem; transition:color .2s; }
+  .nav-links a:hover { color:var(--orange); }
+  .nav-cta { background:var(--orange) !important; color:white !important; padding:9px 20px; border-radius:50px; font-weight:500 !important; }
+  .nav-cta:hover { opacity:0.88; }
+  .hamburger { display:none; background:none; border:none; cursor:pointer; padding:8px; z-index:200; }
+  .hamburger span { display:block; width:24px; height:2px; background:var(--dark); margin:5px 0; transition:all .3s; border-radius:2px; }
+  .hamburger.active span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+  .hamburger.active span:nth-child(2) { opacity:0; }
+  .hamburger.active span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
+  .nav-logo-img { height:52px; display:block; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 560px;
+    align-items: center;
+    padding: 100px 80px 80px 80px;
+    gap: 60px;
+    position: relative;
+    overflow: visible;
+  }
+  .hero-bg {
+    position:absolute; inset:0; pointer-events:none;
+    background: radial-gradient(ellipse 70% 80% at 80% 50%, #FFE0D0 0%, transparent 70%);
+  }
+  .hero-text { position:relative; z-index:1; }
+  .hero-badge {
+    display:inline-flex; align-items:center; gap:6px;
+    background:var(--orange-pale); border:1px solid var(--orange-soft);
+    color:var(--orange); font-size:0.72rem; font-weight:500;
+    letter-spacing:.1em; text-transform:uppercase;
+    padding:6px 14px; border-radius:50px; margin-bottom:28px;
+  }
+  h1 {
+    font-family:'Playfair Display', serif;
+    font-size: clamp(3rem, 4.5vw, 5rem);
+    font-weight:700; line-height:1.08; color:var(--dark); margin-bottom:22px;
+  }
+  h1 em { font-style:italic; color:var(--orange); }
+  .hero-sub {
+    font-size:1.05rem; line-height:1.8; color:var(--muted);
+    max-width:420px; margin-bottom:40px;
+  }
+  .btn-primary {
+    display:inline-flex; align-items:center; gap:10px;
+    background:var(--orange); color:white; text-decoration:none;
+    padding:15px 30px; border-radius:50px; font-weight:500; font-size:0.95rem;
+    box-shadow: 0 6px 24px rgba(242,98,42,.3); transition:all .25s;
+  }
+  .btn-primary:hover { transform:translateY(-2px); background:var(--orange-light); box-shadow:0 10px 32px rgba(242,98,42,.35); }
+
+  .free-note { margin-top:16px; color:var(--muted); font-size:0.82rem; }
+  .free-note strong { color:var(--orange); }
+
+  /* PHONE MOCKUPS */
+  .hero-phones {
+    position: relative; z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 20px;
+    padding-bottom: 40px;
+  }
+  .phone {
+    width: 230px;
+    flex-shrink: 0;
+    border-radius: 40px; overflow: hidden;
+    border: 10px solid #1a1a1a; background: #1a1a1a;
+  }
+  .phone img { width: 100%; height: auto; display: block; }
+  .phone-left {
+    transform: rotate(-5deg) translateY(50px);
+    z-index: 1;
+    margin-right: -30px;
+    box-shadow: -10px 40px 60px rgba(0,0,0,.18);
+  }
+  .phone-right {
+    transform: rotate(4deg);
+    z-index: 2;
+    box-shadow: 10px 40px 80px rgba(0,0,0,.22);
+  }
+
+  /* HOW IT WORKS */
+  .how-section { padding:100px 80px; background:white; }
+  .section-header { margin-bottom:56px; }
+  .section-label { font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; color:var(--orange); font-weight:500; margin-bottom:10px; }
+  .section-title { font-family:'Playfair Display', serif; font-size:clamp(1.8rem, 3vw, 2.8rem); font-weight:700; color:var(--dark); line-height:1.15; margin-bottom:12px; }
+  .section-sub { color:var(--muted); font-size:.95rem; line-height:1.75; max-width:480px; }
+  .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+  .step {
+    padding:32px 24px; border-radius:20px;
+    border:1px solid var(--border); background:var(--cream);
+    transition:transform .3s, box-shadow .3s;
+  }
+  .step:hover { transform:translateY(-4px); box-shadow:0 16px 40px rgba(242,98,42,.08); }
+  .step-icon {
+    width:46px; height:46px; background:var(--orange-pale);
+    border-radius:13px; display:flex; align-items:center; justify-content:center;
+    color:var(--orange); margin-bottom:18px;
+  }
+  .step-n { font-family:'Playfair Display', serif; font-size:2.4rem; color:var(--orange-soft); font-weight:700; line-height:1; margin-bottom:10px; }
+  .step h3 { font-size:.95rem; font-weight:600; color:var(--dark); margin-bottom:8px; }
+  .step p { color:var(--muted); font-size:.85rem; line-height:1.7; }
+
+  /* FEATURES */
+  .features-section { padding:100px 80px; background:var(--cream); }
+  .features-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+  .feat {
+    background:white; border:1px solid var(--border); border-radius:18px;
+    padding:28px; transition:border-color .3s, box-shadow .3s;
+  }
+  .feat:hover { border-color:var(--orange-soft); box-shadow:0 8px 28px rgba(242,98,42,.07); }
+  .feat-icon { width:40px; height:40px; background:var(--orange-pale); border-radius:11px; display:flex; align-items:center; justify-content:center; color:var(--orange); margin-bottom:14px; }
+  .feat h3 { font-size:.92rem; font-weight:600; color:var(--dark); margin-bottom:6px; }
+  .feat p { color:var(--muted); font-size:.84rem; line-height:1.7; }
+
+  /* CTA */
+  .cta-section {
+    padding:100px 80px; text-align:center;
+    background:var(--dark); position:relative; overflow:hidden;
+  }
+  .cta-section::before {
+    content:''; position:absolute; inset:0; pointer-events:none;
+    background: radial-gradient(ellipse 60% 60% at 50% 100%, rgba(242,98,42,.18), transparent 70%);
+  }
+  .cta-inner { max-width:520px; margin:0 auto; position:relative; z-index:1; }
+  .cta-logo { margin-bottom:32px; }
+  .cta-logo img { height:36px; }
+  .cta-section h2 { font-family:'Playfair Display', serif; font-size:clamp(2rem,3.5vw,3rem); font-weight:700; color:white; margin-bottom:14px; }
+  .cta-section p { color:rgba(255,255,255,.5); font-size:.95rem; line-height:1.7; margin-bottom:36px; }
+  .appstore-btn {
+    display:inline-flex; align-items:center; gap:12px;
+    background:white; color:var(--dark); text-decoration:none;
+    padding:14px 26px; border-radius:16px; font-weight:600;
+    box-shadow:0 8px 32px rgba(0,0,0,.3); transition:all .25s;
+  }
+  .appstore-btn:hover { transform:translateY(-2px); box-shadow:0 14px 40px rgba(0,0,0,.35); }
+  .as-small { font-size:.65rem; opacity:.5; text-transform:uppercase; letter-spacing:.06em; }
+  .as-big { font-size:1.05rem; font-weight:700; }
+  .cta-free { margin-top:18px; color:rgba(255,255,255,.35); font-size:.8rem; }
+  .cta-free strong { color:rgba(255,255,255,.7); }
+
+  /* FOOTER */
+  footer {
+    background:var(--dark); border-top:1px solid rgba(255,255,255,.06);
+    padding:32px 80px;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;
+  }
+  .footer-logo img { height:24px; }
+  .footer-links { display:flex; gap:24px; list-style:none; }
+  .footer-links a { text-decoration:none; color:rgba(255,255,255,.3); font-size:.82rem; transition:color .2s; }
+  .footer-links a:hover { color:var(--orange-light); }
+  .footer-copy { color:rgba(255,255,255,.2); font-size:.75rem; }
+
+  /* No animations - everything always visible */
+  .reveal { opacity:1; transform:none; }
+
+  @media (max-width: 1100px) and (min-width: 769px) {
+    .hero { grid-template-columns: 1fr 380px; padding: 100px 48px 80px; }
+    .phone { width: 185px; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .hamburger { display:block; }
+    .nav-links {
+      display:none; position:fixed; top:0; left:0; width:100%; height:100vh;
+      background:var(--cream);
+      flex-direction:column; align-items:center; justify-content:center;
+      gap:36px; z-index:99; padding:80px 24px 40px;
+    }
+    .nav-links.open { display:flex; }
+    .nav-links li { list-style:none; }
+    .nav-links a { font-size:1.3rem; color:var(--dark); }
+    .nav-links a:hover { color:var(--orange); }
+    .nav-cta { font-size:1.1rem !important; padding:14px 32px !important; }
+
+    /* Hero: single column, everything centered */
+    .hero {
+      grid-template-columns: 1fr;
+      padding: 90px 24px 60px;
+      gap: 32px;
+      text-align: center;
+    }
+    .hero-text { display: flex; flex-direction: column; align-items: center; }
+    .hero-badge { align-self: center; }
+    .hero-sub { max-width: 100%; }
+    .hero-actions { justify-content: center; }
+    .free-note { text-align: center; }
+
+    /* Phones: centered below text, smaller */
+    .hero-phones {
+      display: flex;
+      justify-content: center;
+      padding-bottom: 20px;
+    }
+    .phone { width: 155px; border-radius: 28px; border-width: 7px; }
+    .phone-left { margin-right: -20px; }
+
+    /* Sections */
+    .how-section, .features-section, .cta-section { padding: 60px 24px; }
+    .section-header { text-align: center; }
+    .section-sub { max-width: 100%; }
+    .steps { grid-template-columns: 1fr; gap: 16px; }
+    .step { text-align: center; display: flex; flex-direction: column; align-items: center; }
+    .features-grid { grid-template-columns: 1fr; gap: 16px; }
+
+    footer {
+      padding: 28px 24px;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 16px;
+    }
+    .footer-links { justify-content: center; flex-wrap: wrap; }
+  }
+
+  @media (max-width: 600px) {
+    .phone { width: 130px; border-radius: 22px; border-width: 6px; }
+    h1 { font-size: 2.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo"><img src="images/logo-small.png" alt="Artium" class="nav-logo-img"></a>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links">
+    <li><a href="#how">How it works</a></li>
+    <li><a href="support.html">Support</a></li>
+    <li><a href="privacy.html">Privacy</a></li>
+    <li><a href="#download" class="nav-cta">Download Free</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-text">
+    <div class="hero-badge">✦ AI Art Generator · iOS</div>
+    <h1>Your photos,<br>reimagined as<br><em>masterpieces</em></h1>
+    <p class="hero-sub">Upload any photo and transform it into stunning artwork — Baroque, Watercolor, Surreal, Cubism and more. In seconds.</p>
+    <a href="#download" class="btn-primary">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      Download on App Store
+    </a>
+    <p class="free-note"><strong>3 free artworks</strong> every week · No subscription needed</p>
+  </div>
+  <div class="hero-phones">
+    <div class="phone phone-left"><img src="images/phone-left.jpg" alt="Artium artwork result"></div>
+    <div class="phone phone-right"><img src="images/phone-right.jpg" alt="Artium style selection"></div>
+  </div>
+</section>
+
+<section class="how-section" id="how">
+  <div class="section-header reveal">
+    <p class="section-label">How it works</p>
+    <h2 class="section-title">Three steps to your artwork</h2>
+    <p class="section-sub">No experience needed. Just pick a photo and let the AI do the rest.</p>
+  </div>
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
+      <div class="step-n">01</div>
+      <h3>Upload a photo</h3>
+      <p>Pick any photo from your camera roll — a portrait, landscape, pet, or anything you love.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div>
+      <div class="step-n">02</div>
+      <h3>Choose a style</h3>
+      <p>Baroque, Watercolor, Surreal, Renaissance, Cubism and more — with new styles added regularly.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="2" x2="12" y2="15"/></svg></div>
+      <div class="step-n">03</div>
+      <h3>Save & share</h3>
+      <p>Your artwork is ready in seconds. Save to your gallery or share directly to social media.</p>
+    </div>
+  </div>
+</section>
+
+<section class="features-section">
+  <div class="section-header reveal">
+    <p class="section-label">Features</p>
+    <h2 class="section-title">Everything you need</h2>
+    <p class="section-sub">Simple enough for anyone, powerful enough for everyone.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feat reveal">
+      <div class="feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+      <h3>Instant Generation</h3>
+      <p>Get stunning AI artwork in seconds. No waiting, no fuss.</p>
+    </div>
+    <div class="feat reveal">
+      <div class="feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+      <h3>3 Free Credits Every Week</h3>
+      <p>No subscription required. You get free credits automatically, every week.</p>
+    </div>
+    <div class="feat reveal">
+      <div class="feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+      <h3>High Resolution Output</h3>
+      <p>Every artwork is generated at high resolution — ready to print, frame, and display.</p>
+    </div>
+    <div class="feat reveal">
+      <div class="feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></div>
+      <h3>Share Anywhere</h3>
+      <p>Share to Instagram, WhatsApp, or save directly to your camera roll in one tap.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="download">
+  <div class="cta-inner reveal">
+    <div class="cta-logo"><img src="images/logo-small.png" alt="Artium"></div>
+    <h2>Start creating today</h2>
+    <p>Download free and get your first 3 artworks this week.</p>
+    <a href="#" class="appstore-btn">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      <div>
+        <div class="as-small">Download on the</div>
+        <div class="as-big">App Store</div>
+      </div>
+    </a>
+    <p class="cta-free"><strong>Free to download</strong> · iOS · 3 free artworks per week</p>
+  </div>
+</section>
+
+<footer>
+  <ul class="footer-links">
+    <li><a href="support.html">Support</a></li>
+    <li><a href="privacy.html">Privacy Policy</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 Ayda Nil Özyürek</p>
+</footer>
+
+<script>
+function toggleMenu() {
+  document.querySelector('.hamburger').classList.toggle('active');
+  document.querySelector('.nav-links').classList.toggle('open');
+  document.body.classList.toggle('menu-open');
+}
+document.querySelectorAll('.nav-links a').forEach(function(link) {
+  link.addEventListener('click', function() {
+    document.querySelector('.hamburger').classList.remove('active');
+    document.querySelector('.nav-links').classList.remove('open');
+    document.body.classList.remove('menu-open');
+  });
+});
+</script>
+</body>
+</html>

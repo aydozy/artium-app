@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artium — Privacy Policy</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #F2622A;
+    --orange-light: #FF8C5A;
+    --orange-pale: #FFF0EB;
+    --orange-soft: #FFD5C2;
+    --cream: #FDFAF7;
+    --dark: #1A1208;
+    --text: #2D1F0E;
+    --muted: #9E8A78;
+    --border: #EDE5DC;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 68px;
+    background: rgba(253,250,247,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo { text-decoration: none; }
+  .nav-logo-img { height: 52px; display: block; }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.9rem;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover, .nav-links a.active { color: var(--orange); }
+
+  .nav-cta {
+    background: var(--orange);
+    color: white !important;
+    padding: 10px 22px;
+    border-radius: 50px;
+    font-weight: 500 !important;
+  }
+
+  .hamburger { display:none; background:none; border:none; cursor:pointer; padding:8px; z-index:200; }
+  .hamburger span { display:block; width:24px; height:2px; background:var(--dark); margin:5px 0; transition:all .3s; border-radius:2px; }
+  .hamburger.active span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+  .hamburger.active span:nth-child(2) { opacity:0; }
+  .hamburger.active span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
+  body.menu-open { overflow: hidden; }
+
+  .page-hero {
+    padding: 130px 40px 70px;
+    background: white;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-hero-inner { max-width: 760px; margin: 0 auto; }
+
+  .page-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--orange-pale);
+    border: 1px solid var(--orange-soft);
+    color: var(--orange);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 50px;
+    margin-bottom: 20px;
+  }
+
+  .page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 14px;
+    line-height: 1.15;
+  }
+
+  .page-title em { font-style: italic; color: var(--orange); }
+
+  .page-sub {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  .effective-date {
+    display: inline-block;
+    margin-top: 16px;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+
+  .effective-date strong { color: var(--text); }
+
+  /* CONTENT */
+  .content {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 60px 40px 100px;
+  }
+
+  .privacy-section {
+    margin-bottom: 48px;
+  }
+
+  .privacy-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: var(--orange-pale);
+    color: var(--orange);
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    font-family: 'Outfit', sans-serif;
+  }
+
+  .privacy-section p {
+    color: var(--muted);
+    font-size: 0.92rem;
+    line-height: 1.8;
+    margin-bottom: 14px;
+  }
+
+  .privacy-section ul {
+    list-style: none;
+    margin: 14px 0;
+  }
+
+  .privacy-section ul li {
+    color: var(--muted);
+    font-size: 0.92rem;
+    line-height: 1.8;
+    padding: 6px 0 6px 20px;
+    position: relative;
+  }
+
+  .privacy-section ul li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    color: var(--orange);
+    font-size: 0.6rem;
+    top: 10px;
+  }
+
+  .highlight-box {
+    background: var(--orange-pale);
+    border: 1px solid var(--orange-soft);
+    border-left: 3px solid var(--orange);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 20px 0;
+  }
+
+  .highlight-box p {
+    color: var(--text) !important;
+    font-weight: 400;
+    margin: 0 !important;
+  }
+
+  .contact-row {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 48px;
+  }
+
+  .contact-row p { color: var(--muted); font-size: 0.9rem; margin: 0; }
+  .contact-row strong { color: var(--dark); }
+
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--orange);
+    color: white;
+    text-decoration: none;
+    padding: 11px 20px;
+    border-radius: 50px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+
+  .contact-link:hover {
+    background: var(--orange-light);
+    transform: translateY(-1px);
+  }
+
+  footer {
+    background: var(--cream);
+    border-top: 1px solid var(--border);
+    padding: 32px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--orange);
+    font-style: italic;
+    text-decoration: none;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.85rem;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--orange); }
+  .footer-copy { color: var(--muted); font-size: 0.8rem; }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .hamburger { display:block; }
+    .nav-links {
+      display:none; position:fixed; top:0; left:0; width:100%; height:100vh;
+      background:var(--cream);
+      flex-direction:column; align-items:center; justify-content:center;
+      gap:36px; z-index:99; padding:80px 24px 40px;
+    }
+    .nav-links.open { display:flex; }
+    .nav-links li { list-style:none; }
+    .nav-links a { font-size:1.3rem; color:var(--dark); }
+    .nav-links a:hover { color:var(--orange); }
+    .nav-cta { font-size:1.1rem !important; padding:14px 32px !important; }
+    .page-hero { padding: 100px 20px 50px; }
+    .content { padding: 40px 20px 80px; }
+    footer { flex-direction: column; text-align: center; padding: 24px 20px; }
+    .footer-links { justify-content: center; flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo"><img src="images/logo-small.png" alt="Artium" class="nav-logo-img"></a>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="support.html">Support</a></li>
+    <li><a href="privacy.html" class="active">Privacy</a></li>
+    <li><a href="#" class="nav-cta">Download Free</a></li>
+  </ul>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-badge">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Legal
+    </div>
+    <h1 class="page-title"><em>Privacy</em> Policy</h1>
+    <p class="page-sub">Privacy is a right. Here's exactly what Artium collects, why, and how your data is protected.</p>
+    <span class="effective-date">Effective date: <strong>March 26, 2026</strong></span>
+  </div>
+</div>
+
+<div class="content">
+
+  <div class="highlight-box">
+    <p>🔒 <strong>Short version:</strong> Artium only collects what's necessary to provide the service. Your data is never sold. Your photos are used only to generate your artwork and nothing else.</p>
+  </div>
+
+  <div class="privacy-section">
+    <h2><span class="section-num">1</span> About Artium</h2>
+    <p>Artium is an AI-powered photo-to-art application developed and operated by Ayda Nil Özyürek. This Privacy Policy explains how information is handled when you use the Artium iOS application.</p>
+    <p>If you have any questions about this policy, please reach out at <strong>ozyurek.aydanil@gmail.com</strong>.</p>
+  </div>
+
+  <div class="privacy-section">
+    <h2><span class="section-num">2</span> Information Collected</h2>
+    <p>Only what is needed to provide the Artium service is collected:</p>
+    <ul>
+      <li><strong>Photos you upload:</strong> Images you choose to submit for artwork generation. These are processed by AI and not stored permanently after your artwork is created.</li>
+      <li><strong>Usage data:</strong> Basic, anonymized information about how you use the app (e.g., which features are used) to help improve the experience.</li>
+      <li><strong>Device information:</strong> Basic device type and OS version, used for technical support and compatibility.</li>
+      <li><strong>In-app purchase data:</strong> Managed entirely by Apple. Artium does not directly process or store your payment information.</li>
+    </ul>
+    <p>Your name or email address is not collected, and no account is created unless you voluntarily reach out for support.</p>
+  </div>
+
+  <div class="privacy-section">
+    <h2><span class="section-num">3</span> How Your Information Is Used</h2>
+    <p>The information collected is used solely to:</p>
+    <ul>
+      <li>Generate AI artwork from your uploaded photos</li>
+      <li>Provide, maintain, and improve the Artium app</li>
+      <li>Respond to your support requests</li>
+      <li>Understand usage patterns to make the app better</li>
+    </ul>
+    <p>Your photos are not used for training AI models, advertising, or any other purpose beyond generating your requested artwork.</p>
+  </div>
+
+  <div class="privacy-section">
+    <h2><span class="section-num">4</span> Sharing Your Information</h2>
+    <p>Your personal information is never sold, traded, or rented to third parties.</p>
+    <p>Limited data may be shared only with:</p>
+    <ul>
+      <li><strong>AI processing providers:</strong> To generate artwork from your photo. These providers are contractually bound to use your data only for this purpose.</li>
+      <li><strong>Apple:</strong> For in-app purchases and App Store functionality, governed by Apple's Privacy Policy.</li>
+      <li><strong>Legal requirements:</strong> If required by law or to protect legal rights.</li>
+    </ul>
+  </div>
+
+  <div class="privacy-section">
+    <h2><span class="section-num">5</span> Data Retention</h2>
+    <p>Photos you upload are used to generate your artwork and are not permanently stored on the servers. Generated artworks are saved locally on your device within the app and are only deleted if you choose to remove them or uninstall the app.</p>
+  </div>
+
+  <div class="privacy-section">
+    <h2><span class="section-num">6</span> Children's Privacy</h2>
+    <p>Artium is not directed at children under 13 years of age. Personal information from children under 13 is not knowingly collected. If you believe such information has been inadvertently collected, please reach out immediately at ozyurek.aydanil@gmail.com.</p>
+  </div>
+
+  <div class="privacy-section">
+    <h2><span class="section-num">7</span> Your Rights</h2>
+    <p>Depending on your location, you may have the right to:</p>
+    <ul>
+      <li>Access the information held about you</li>
+      <li>Request deletion of your data</li>
+      <li>Object to the processing of your data</li>
+    </ul>
+    <p>To exercise any of these rights, please reach out at <strong>ozyurek.aydanil@gmail.com</strong>.</p>
+  </div>
+
+  <div class="privacy-section">
+    <h2><span class="section-num">8</span> Security</h2>
+    <p>Reasonable technical and organizational measures are taken to protect your information from unauthorized access, loss, or misuse. However, no internet transmission is 100% secure, and absolute security cannot be guaranteed.</p>
+  </div>
+
+  <div class="privacy-section">
+    <h2><span class="section-num">9</span> Changes to This Policy</h2>
+    <p>This Privacy Policy may be updated from time to time. When that happens, the "Effective date" at the top of this page will be updated. Please review this policy periodically. Continued use of the app after changes constitutes acceptance of the updated policy.</p>
+  </div>
+
+  <div class="contact-row">
+    <div>
+      <p><strong>Questions about your privacy?</strong></p>
+      <p>Happy to help. Reach out anytime.</p>
+    </div>
+    <a href="mailto:ozyurek.aydanil@gmail.com" class="contact-link">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+      ozyurek.aydanil@gmail.com
+    </a>
+  </div>
+
+</div>
+
+<footer>
+  <a href="index.html"><img src="images/logo-small.png" alt="Artium" class="footer-logo" style="height:40px;"></a>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="support.html">Support</a></li>
+    <li><a href="privacy.html">Privacy Policy</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 Ayda Nil Özyürek</p>
+</footer>
+
+<script>
+function toggleMenu() {
+  document.querySelector('.hamburger').classList.toggle('active');
+  document.querySelector('.nav-links').classList.toggle('open');
+  document.body.classList.toggle('menu-open');
+}
+document.querySelectorAll('.nav-links a').forEach(function(link) {
+  link.addEventListener('click', function() {
+    document.querySelector('.hamburger').classList.remove('active');
+    document.querySelector('.nav-links').classList.remove('open');
+    document.body.classList.remove('menu-open');
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artium — Support</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #F2622A;
+    --orange-light: #FF8C5A;
+    --orange-pale: #FFF0EB;
+    --orange-soft: #FFD5C2;
+    --cream: #FDFAF7;
+    --dark: #1A1208;
+    --text: #2D1F0E;
+    --muted: #9E8A78;
+    --border: #EDE5DC;
+    --white: #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 68px;
+    background: rgba(253,250,247,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo { text-decoration: none; }
+  .nav-logo-img { height: 52px; display: block; }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.9rem;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover, .nav-links a.active { color: var(--orange); }
+
+  .nav-cta {
+    background: var(--orange);
+    color: white !important;
+    padding: 10px 22px;
+    border-radius: 50px;
+    font-weight: 500 !important;
+  }
+
+  .hamburger { display:none; background:none; border:none; cursor:pointer; padding:8px; z-index:200; }
+  .hamburger span { display:block; width:24px; height:2px; background:var(--dark); margin:5px 0; transition:all .3s; border-radius:2px; }
+  .hamburger.active span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+  .hamburger.active span:nth-child(2) { opacity:0; }
+  .hamburger.active span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
+  body.menu-open { overflow: hidden; }
+
+  /* PAGE HERO */
+  .page-hero {
+    padding: 130px 40px 80px;
+    background: white;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-hero-inner {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .page-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--orange-pale);
+    border: 1px solid var(--orange-soft);
+    color: var(--orange);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 50px;
+    margin-bottom: 20px;
+  }
+
+  .page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 14px;
+    line-height: 1.15;
+  }
+
+  .page-title em { font-style: italic; color: var(--orange); }
+
+  .page-sub {
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  /* CONTENT */
+  .content {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 60px 40px 100px;
+  }
+
+  /* Contact card */
+  .contact-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 40px;
+    margin-bottom: 48px;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+  }
+
+  .contact-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--orange), var(--orange-light));
+    border-radius: 3px 3px 0 0;
+  }
+
+  .contact-card:hover {
+    box-shadow: 0 12px 40px rgba(242,98,42,0.1);
+  }
+
+  .card-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--orange);
+    font-weight: 500;
+    margin-bottom: 14px;
+  }
+
+  .contact-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 10px;
+  }
+
+  .contact-card p {
+    color: var(--muted);
+    line-height: 1.7;
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+  }
+
+  .email-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--orange);
+    color: white;
+    text-decoration: none;
+    padding: 13px 24px;
+    border-radius: 50px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 16px rgba(242,98,42,0.25);
+  }
+
+  .email-btn:hover {
+    background: var(--orange-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(242,98,42,0.3);
+  }
+
+  .response-note {
+    margin-top: 14px;
+    color: var(--muted);
+    font-size: 0.82rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* FAQ */
+  .faq-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+
+  .faq-sub {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-bottom: 28px;
+  }
+
+  .faq-item {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .faq-item:hover {
+    border-color: var(--orange-soft);
+  }
+
+  .faq-item.open {
+    border-color: var(--orange-soft);
+    box-shadow: 0 4px 20px rgba(242,98,42,0.07);
+  }
+
+  .faq-q {
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 20px 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--text);
+    transition: color 0.2s;
+  }
+
+  .faq-q:hover { color: var(--orange); }
+  .faq-item.open .faq-q { color: var(--orange); }
+
+  .faq-toggle {
+    flex-shrink: 0;
+    width: 28px; height: 28px;
+    background: var(--orange-pale);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--orange);
+    font-size: 1.2rem;
+    line-height: 1;
+    transition: transform 0.3s, background 0.3s;
+    font-weight: 300;
+  }
+
+  .faq-item.open .faq-toggle {
+    background: var(--orange);
+    color: white;
+    transform: rotate(45deg);
+  }
+
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.35s ease;
+    padding: 0 24px;
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.75;
+  }
+
+  .faq-item.open .faq-a {
+    max-height: 300px;
+    padding: 0 24px 22px;
+  }
+
+  /* Version info */
+  .version-card {
+    background: var(--orange-pale);
+    border: 1px solid var(--orange-soft);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .version-card p {
+    color: var(--text);
+    font-size: 0.88rem;
+  }
+
+  .version-card strong { color: var(--orange); }
+
+  footer {
+    background: var(--cream);
+    border-top: 1px solid var(--border);
+    padding: 32px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--orange);
+    font-style: italic;
+    text-decoration: none;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.85rem;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--orange); }
+  .footer-copy { color: var(--muted); font-size: 0.8rem; }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .hamburger { display:block; }
+    .nav-links {
+      display:none; position:fixed; top:0; left:0; width:100%; height:100vh;
+      background:var(--cream);
+      flex-direction:column; align-items:center; justify-content:center;
+      gap:36px; z-index:99; padding:80px 24px 40px;
+    }
+    .nav-links.open { display:flex; }
+    .nav-links li { list-style:none; }
+    .nav-links a { font-size:1.3rem; color:var(--dark); }
+    .nav-links a:hover { color:var(--orange); }
+    .nav-cta { font-size:1.1rem !important; padding:14px 32px !important; }
+    .page-hero { padding: 100px 20px 50px; }
+    .content { padding: 40px 20px 80px; }
+    footer { flex-direction: column; text-align: center; padding: 24px 20px; }
+    .footer-links { justify-content: center; flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo"><img src="images/logo-small.png" alt="Artium" class="nav-logo-img"></a>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="support.html" class="active">Support</a></li>
+    <li><a href="privacy.html">Privacy</a></li>
+    <li><a href="#" class="nav-cta">Download Free</a></li>
+  </ul>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-badge">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      Support Center
+    </div>
+    <h1 class="page-title">Here to <em>help</em></h1>
+    <p class="page-sub">Have a question about Artium? Browse the FAQ or get in touch — typically responded within 24 hours.</p>
+  </div>
+</div>
+
+<div class="content">
+
+  <div class="contact-card">
+    <p class="card-label">Contact</p>
+    <h2>Send a message</h2>
+    <p>Can't find the answer you're looking for? Send an email and you'll get a response as soon as possible.</p>
+    <a href="mailto:ozyurek.aydanil@gmail.com" class="email-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+      ozyurek.aydanil@gmail.com
+    </a>
+    <p class="response-note">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Typical response time: 24–48 hours
+    </p>
+  </div>
+
+  <h2 class="faq-heading">Frequently Asked Questions</h2>
+  <p class="faq-sub">Quick answers to the most common questions.</p>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggle(this)">
+      How do I create my first artwork?
+      <span class="faq-toggle">+</span>
+    </button>
+    <div class="faq-a">Open the app, tap the camera icon to upload a photo from your library or take one. Then choose an art style (Baroque, Watercolor, Surreal, etc.) and tap "Create Artwork." Your result will be ready in seconds!</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggle(this)">
+      How do credits work?
+      <span class="faq-toggle">+</span>
+    </button>
+    <div class="faq-a">Every Artium user receives 3 free credits automatically every week. Each artwork generation uses 1 credit. You can also purchase additional credit packs from within the app if you'd like to create more.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggle(this)">
+      Why isn't my image generating?
+      <span class="faq-toggle">+</span>
+    </button>
+    <div class="faq-a">Please check your internet connection first. If you have a stable connection and the issue continues, try closing and reopening the app. Make sure you're on the latest version from the App Store. If the problem persists, send an email and it will be resolved right away.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggle(this)">
+      What types of photos work best?
+      <span class="faq-toggle">+</span>
+    </button>
+    <div class="faq-a">Artium works great with portraits, landscapes, animals, food, architecture — basically anything! Clear, well-lit photos tend to produce the most stunning results. Avoid very dark or blurry images for best quality.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggle(this)">
+      Can I use my artworks commercially?
+      <span class="faq-toggle">+</span>
+    </button>
+    <div class="faq-a">Artworks created with Artium are intended for personal use. For commercial licensing, please reach out at ozyurek.aydanil@gmail.com to discuss options.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggle(this)">
+      How do I save or share my artwork?
+      <span class="faq-toggle">+</span>
+    </button>
+    <div class="faq-a">After your artwork is generated, tap "Save" to add it to your camera roll, or tap "Share" to send it directly via Instagram, WhatsApp, Messages, and more.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggle(this)">
+      How do I find my previously created artworks?
+      <span class="faq-toggle">+</span>
+    </button>
+    <div class="faq-a">Tap the palette icon on the top left of the home screen to open "My Artworks." All your creations are saved there, organized by date and style.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggle(this)">
+      Is my data and photos kept private?
+      <span class="faq-toggle">+</span>
+    </button>
+    <div class="faq-a">Absolutely. Photos you upload are only used to generate your artwork and are never shared with third parties or used for any other purpose. Please see our Privacy Policy for full details.</div>
+  </div>
+
+  <div class="version-card">
+    <p>Current version: <strong>Artium 1.0</strong> · iOS</p>
+    <p>© 2026 Ayda Nil Özyürek</p>
+  </div>
+
+</div>
+
+<footer>
+  <a href="index.html"><img src="images/logo-small.png" alt="Artium" class="footer-logo" style="height:40px;"></a>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="support.html">Support</a></li>
+    <li><a href="privacy.html">Privacy Policy</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 Ayda Nil Özyürek</p>
+</footer>
+
+<script>
+  function toggle(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+</script>
+
+<script>
+function toggleMenu() {
+  document.querySelector('.hamburger').classList.toggle('active');
+  document.querySelector('.nav-links').classList.toggle('open');
+  document.body.classList.toggle('menu-open');
+}
+document.querySelectorAll('.nav-links a').forEach(function(link) {
+  link.addEventListener('click', function() {
+    document.querySelector('.hamburger').classList.remove('active');
+    document.querySelector('.nav-links').classList.remove('open');
+    document.body.classList.remove('menu-open');
+  });
+});
+</script>
+
+</body>
+</html>
